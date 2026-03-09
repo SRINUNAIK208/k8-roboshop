@@ -23,3 +23,22 @@ spec:
      containers:
       - name: mongodb
         image: srinunaik208/mongodb:v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service 
+  namespace: roboshop
+  labels: 
+    project: roboshop
+    dev: env
+spec:
+  selector:
+    component: mongodb
+    project: roboshop
+    dev: env
+  ports:
+   - protocol: TCP
+     port: 27017
+     targetPort: 27017
+
