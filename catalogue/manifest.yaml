@@ -22,7 +22,7 @@ metadata:
     project: roboshop
     env: dev
 spec:
-  replace: 1
+  replicas: 1
   selector:
     matchLabels:
       component: catalogue
