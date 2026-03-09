@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:  
-  name: roboshop
+  name: mongodb
   namespace: roboshop
   labels:
     project: roboshop
@@ -31,12 +31,12 @@ metadata:
   namespace: roboshop
   labels: 
     project: roboshop
-    dev: env
+    env: dev
 spec:
   selector:
     component: mongodb
     project: roboshop
-    dev: env
+    env: dev
   ports:
    - protocol: TCP
      port: 27017
