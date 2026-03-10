@@ -100,8 +100,8 @@ spec:
          image: srinunaik208/frontend:v1
          volumeMounts:
            - name: nginx-conf
-             mountPath: /etc/nginx/nginx-conf
-             subPath: nginx-conf
+             mountPath: /etc/nginx/nginx.conf
+             subPath: nginx.conf
              readOnly: true
       volumes:
        - name: nginx-conf
