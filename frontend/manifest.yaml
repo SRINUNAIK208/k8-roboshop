@@ -98,12 +98,12 @@ spec:
       containers:
        - name: frontend
          image: srinunaik208/frontend:v1
-         voulmeMounts:
+         volumeMounts:
            - name: nginx-conf
              mountPath: /etc/nginx/nginx-conf
              subPath: nginx-conf
              readOnly: true
-      voulmes:
+      volumes:
        - name: nginx-conf
          configMap:
            name: nginx-conf
