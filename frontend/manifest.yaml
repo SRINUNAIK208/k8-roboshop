@@ -1,0 +1,10 @@
+apiVersion: v1 
+kind: ConfigMap
+metadata:
+  name: frontend
+  labels:
+    component: frontend
+    project: roboshop
+    env: dev
+data:
+ 
