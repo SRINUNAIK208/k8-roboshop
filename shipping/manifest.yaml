@@ -8,8 +8,8 @@ metadata:
     project: roboshop
     env: dev
 data:
-  CART_ENDPOINT: cart:8080 
-  DB_HOST: mysql
+  CART_ENDPOINT: "cart:8080"
+  DB_HOST: "mysql"
 ---
 
 apiVersion: apps/v1
