@@ -7,4 +7,4 @@ spec:
   containers:
     - name: debug
       image: srinunaik208/debug:v1
-      imagepullpolicy: always
+      imagePullPolicy: Always
