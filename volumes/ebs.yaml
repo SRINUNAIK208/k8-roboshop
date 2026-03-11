@@ -44,6 +44,19 @@ spec:
    - name: persistence-storage
      persistentVolumeClaim: 
        claimName: ebs-static
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ebs-service
+spec:
+  type: LoadBalancer
+  selector:
+   purpose: ebs-practise
+  ports:
+   - protocol: TCP
+     port: 80
+     targetPort: 80
 
   
 
