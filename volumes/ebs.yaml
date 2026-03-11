@@ -24,3 +24,24 @@ spec:
   resources:
     requests:
       storage: 5Gi     
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    purpose: ebs-practise
+spec:
+  containers:
+   - name: nginx
+     image: nginx
+     volumeMounts:
+       name: ebs-static
+       mountPath: /usr/share/nginx/html
+  volumes:
+   - name: ebs-static
+     PersistentVolumeClaim: 
+       claimName: ebs-static
+
+  
+
