@@ -27,7 +27,7 @@ spec:
         emptyDir: {}
       containers:
        - name: mysql
-         image: srinunaik208/mysql:v2
+         image: srinunaik208/mysql:v3
          imagePullPolicy: Always
          volumeMounts:
          - mountPath: /tmp
