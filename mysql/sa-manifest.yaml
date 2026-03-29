@@ -34,7 +34,7 @@ spec:
            name: mysql-secret 
       initContainers:
       - name: fetch-secret
-        image: amazon/aws_cli
+        image: amazon/aws-cli
         command: 
         - sh
         - -c
