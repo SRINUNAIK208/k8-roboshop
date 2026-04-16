@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: roboshop
+  name: 
+  labels:
+    project: roboshop
+annotations:
+  alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
+  alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:824333137275:certificate/4cb8ab79-0741-4d5d-8bcb-2bf354c63fa4
+  alb.ingress.kubernetes.io/target-type: ip 
+  alb.ingress.kubernetes.io/scheme:  internet-facing
+spec:
+  ingressClassName: alb
+  rules:
+   - host: "roboshop.srinunayak.online"
+     http:
+       paths:
+        - pathType: Prefix 
+          path: "/"
+          backend:
+            service:
+              name: app1
+              port:
+               number: 80
