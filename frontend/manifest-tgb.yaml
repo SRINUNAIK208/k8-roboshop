@@ -136,10 +136,10 @@ spec:
 apiVersion: elbv2.k8s.aws/v1beta1
 kind: TargetGroupBinding
 metadata:
-  namespace: roboshop
   name: frontend
+  namespace: roboshop
 spec:
   serviceRef:
     name: frontend # route traffic to the awesome-service
     port: 80
-  targetGroupName: arn:aws:elasticloadbalancing:us-east-1:824333137275:targetgroup/roboshop-dev-frontend/4402c45c12b2c351
+  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:824333137275:targetgroup/roboshop-dev-frontend/4402c45c12b2c351
