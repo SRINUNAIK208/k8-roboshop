@@ -5,6 +5,5 @@ metadata:
   namespace: roboshop
 spec:
   containers:
-    - name: debug
-      image: srinunaik208/debug:v1
-      imagePullPolicy: Always
+  - name: debug
+    image: srinunayak/debug:v1
