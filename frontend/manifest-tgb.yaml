@@ -122,7 +122,6 @@ metadata:
     project: roboshop
     env: dev
 spec:
-  type: LoadBalancer
   selector:
     component: frontend
     project: roboshop
@@ -142,4 +141,4 @@ spec:
   serviceRef:
     name: frontend # route traffic to the awesome-service
     port: 80
-  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:824333137275:targetgroup/roboshop-dev-frontend/4402c45c12b2c351
+  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:824333137275:targetgroup/k8s-roboshop-frontend-b232bddd9c/adb7b33f1fa03c86
