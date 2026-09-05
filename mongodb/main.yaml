@@ -74,7 +74,7 @@ spec:
    spec:
      accessModes:
      - ReadWriteOnce
-     StorageClass: roboshop
+     storageClassName: roboshop
      resources:
         requests:
           storage: 4Gi
