@@ -63,7 +63,7 @@ spec:
    spec:
      containers:
      - name: mongodb
-       image: srinunaik208/mongodb:v5  
+       image: srinunaik208/mongodb:v5
        volumeMounts:
        - name: mongodb-storage
          mountPath: /data/db
