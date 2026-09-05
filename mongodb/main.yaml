@@ -47,6 +47,7 @@ metadata:
     component: mongodb
     tier: database
 spec:
+ serviceName: mongodb-headless
  replicas: 1
  selector:
    matchLabels:
