@@ -1,0 +1,33 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: low-latency-ebs-dynamic
+provisioner: ebs.csi.aws.com
+reclaimPolicy: Retain 
+volumeBindingMode: WaitForFirstConsumer
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: restore-pvc-ebs-dynamic
+spec:
+  StorageClass: low-latency
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+
+---
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - name: restore-pvc-ebs-dynamic
+      mountPath: /etc/nginx
