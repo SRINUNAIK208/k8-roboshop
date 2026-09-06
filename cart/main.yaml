@@ -16,7 +16,7 @@ metadata:
 spec:
   replicas: 1
   selector:
-     matchLebls:
+     matchLabels:
        project: roboshop
        component: cart
        tier: backend
@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: cart
-        image: srinunayak208/cart:v1
+        image: srinunaik208/cart:v5
         envFrom:
         - configMapRef:
             name: cart
