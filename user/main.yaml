@@ -38,10 +38,10 @@ spec:
         - configMapRef:
             name: user
         resources:
-          request:
+          requests:
             cpu: "100m"
             memory: "128Gi"
-          limit:
+          limits:
             cpu: "200m"
             memory: "256Gi"
           
