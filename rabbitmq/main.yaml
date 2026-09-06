@@ -8,7 +8,7 @@ metadata:
     component: rabbitmq
     tier: database
 spec:
-  clusterIp: None
+  clusterIP: None
   selector:
     project: roboshop
     component: rabbitmq
@@ -38,7 +38,7 @@ spec:
     targetPort: 5672
 ---
 apiVersion: apps/v1 
-kins: StatefulSet 
+kind: StatefulSet 
 metadata:
   name: rabbitmq
   namespace: roboshop 
@@ -47,6 +47,7 @@ metadata:
     component: rabbitmq
     tier: database
 spec:
+ serviceName: rabbitmq-headless
  replicas: 1
  selector:
    matchLabels:
@@ -62,10 +63,10 @@ spec:
    spec:
      containers:
      - name: rabbitmq
-       image: srinunayak208/rabbitmq:v1 
+       image: srinunaik208/rabbitmq:v5
        volumeMounts:
        - name: rabbitmq-storage
-         mountPath: /data/db
+         mountPath: /var/lib/rabbitmq
 
  volumeClaimTemplates:
  - metadata:
@@ -73,7 +74,7 @@ spec:
    spec:
      accessModes:
      - ReadWriteOnce
-     StorageClass: roboshop
+     storageClassName: roboshop
      resources:
         requests:
           storage: 4Gi
