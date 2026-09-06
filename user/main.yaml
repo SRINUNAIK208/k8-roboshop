@@ -1,7 +1,7 @@
 apiVersion: v1 
 kind: ConfigMap
 metadata:
-  name: cart 
+  name: user 
   namespace: roboshop
   labels:
     project: roboshop
@@ -20,7 +20,7 @@ metadata:
 spec:
   replicas: 1
   selector:
-     matchLebls:
+     matchLabels:
        project: roboshop
        component: user
        tier: backend
@@ -33,17 +33,17 @@ spec:
     spec:
       containers:
       - name: user
-        image: srinunayak208/user:v1
+        image: srinunaik208/user:v5
         envFrom:
         - configMapRef:
             name: user
         resources:
           request:
-            cpu: 500m
-            memory:
+            cpu: "100m"
+            memory: "128Gi"
           limit:
-            cpu: 200m
-            memory:
+            cpu: "200m"
+            memory: "256Gi"
           
 
 ---
@@ -60,7 +60,7 @@ spec:
   ports:
   - protocol: TCP
     port: 8080
-    tagetPort: 8080
+    targetPort: 8080
 
 ---
 apiVersion: autoscaling/v2
