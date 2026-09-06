@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: catalogue
-        image: srinunayak208/catalogue:v1
+        image: srinunaik208/catalogue:v5
         envFrom:
         - configMapRef:
           name: catalogue
