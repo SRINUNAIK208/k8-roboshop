@@ -8,7 +8,7 @@ metadata:
     component: redis
     tier: database
 spec:
-  clusterIp: None
+  clusterIP: None
   selector:
     project: roboshop
     component: redis
@@ -40,7 +40,7 @@ spec:
 ---
 
 apiVersion: apps/v1 
-kins: StatefulSet 
+kind: StatefulSet 
 metadata:
   name: redis
   namespace: roboshop 
@@ -64,10 +64,10 @@ spec:
    spec:
      containers:
      - name: redis
-       image: srinunayak208/redis:v1 
+       image: srinunaik208/redis:v5
        volumeMounts:
        - name: redis-storage
-         mountPath: /data/db
+         mountPath: /data
 
  volumeClaimTemplates:
  - metadata:
