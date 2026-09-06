@@ -100,7 +100,7 @@ spec:
         - name: nginx.conf
           mountPath: /etc/nginx/nginx.conf 
           subPath: nginx.conf 
-          readonly: true
+          readOnly: true
         resources:
           requests:
             cpu: 100m
@@ -108,6 +108,13 @@ spec:
           limits:
             cpu: 200m
             memory: "256Mi"
+      volumes:
+      - name: nginx-conf 
+        configMap:
+          name: nginx-conf
+          items:
+          - key: nginx.conf
+            path: nginx.conf
           
 
 ---
