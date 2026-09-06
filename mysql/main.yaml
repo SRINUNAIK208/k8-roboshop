@@ -52,7 +52,7 @@ spec:
 
 ---
 apiVersion: apps/v1 
-kins: StatefulSet 
+kind: StatefulSet 
 metadata:
   name: mysql
   namespace: roboshop 
