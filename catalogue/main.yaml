@@ -16,7 +16,7 @@ metadata:
 spec:
   replicas: 1
   selector:
-     matchLebls:
+     matchLabels:
        project: roboshop
        component: catalogue
        tier: backend
