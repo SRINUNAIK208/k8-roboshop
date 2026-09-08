@@ -1,16 +1,16 @@
-apiVersion: v1 
-kind: Secret 
-metadata:
-   name: mysql
-   namespace: roboshop
-   labels:
-     project: roboshop
-     component: mysql 
-     tier: database
-type: Opaque
-data:
-  MYSQL_ROOT_PASSWORD: "Um9ib1Nob3BAMQ=="
----
+# apiVersion: v1 
+# kind: Secret 
+# metadata:
+#    name: mysql
+#    namespace: roboshop
+#    labels:
+#      project: roboshop
+#      component: mysql 
+#      tier: database
+# type: Opaque
+# data:
+#   MYSQL_ROOT_PASSWORD: "Um9ib1Nob3BAMQ=="
+# ---
 apiVersion: v1 
 kind: Service
 metadata:
@@ -75,6 +75,21 @@ spec:
        component: mysql
        tier: database
    spec:
+     serviceAccountName: aws-secreat-manager
+     volumes:
+     - name: mysql-secret
+       emptyDir: {}
+     initContainers:
+     - name: aws-cli 
+       image:  amazon/aws-cli
+       command: 
+          - sh
+          - -c
+          - |
+            aws secretsmanager get-secret-value --secret-id roboshop/mysql/password --query SecretString --output text | jq -r '.MYSQL_ROOT_PASSWORD'  > secret/secret.txt
+       volumeMounts:
+       - name: mysql-secret
+         mountPath: secret
      containers:
      - name: mysql
        image: srinunaik208/mysql:v5
@@ -84,6 +99,8 @@ spec:
        volumeMounts:
        - name: mysql-storage
          mountPath: /var/lib/mysql
+       - name: mysql-secret
+         mountPath: secret
        
 
  volumeClaimTemplates:
