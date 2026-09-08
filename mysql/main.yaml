@@ -93,9 +93,9 @@ spec:
      containers:
      - name: mysql
        image: srinunaik208/mysql:v5
-       envFrom:
-      #  - secretRef:
-      #      name: mysql
+      #  envFrom:
+      # #  - secretRef:
+      # #      name: mysql
        volumeMounts:
        - name: mysql-storage
          mountPath: /var/lib/mysql
