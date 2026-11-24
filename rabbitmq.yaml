@@ -11,29 +11,24 @@ metadata:
     tier: database 
 spec:
   replicas: 1
-  selectors:
+  selector:
     matchLabels:
       project: roboshop
       env: dev 
       component: rabbitmq
       tier: database
-  templates:
+  template:
     metadata:
+     labels:
       project: roboshop
       env: dev 
       component: rabbitmq
       tier: database
     spec:
-    - containers:
-         name: rabbitmq
+     containers:
+       - name: rabbitmq
          image: srinunaik208/rabbitmq:v5 
-         resources:
-          requests:
-            memory: 
-            cpu: 
-          limits:
-            memory:
-            cpu:
+        
         
 ---
 apiVersion: v1 
@@ -47,35 +42,35 @@ metadata:
      component: rabbitmq
      tier: database
 spec:
-  selectors:
+  selector:
     project: roboshop
     env: dev 
     component: rabbitmq
     tier: database
   ports:
   - protocol: TCP 
-    port: 53
-    targetPort: 27017
-
+    port: 5672
+    targetPort: 5672
 ---
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
+---
+apiVersion: v1 
+kind: Service 
 metadata:
-  name: rabbitmq
-  namespace: roboshop
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: StatefulSet
-    name: rabbitmq 
-  minReplicas: 2
-  maxReplicas: 10
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50
-    
-
-      
+   name: rabbitmq-headless
+   namespace: roboshop
+   labels:
+     project: roboshop
+     env: dev 
+     component: rabbitmq
+     tier: database
+spec:
+  clusterIP: None
+  selector:
+    project: roboshop
+    env: dev 
+    component: rabbitmq
+    tier: database
+  ports:
+  - protocol: TCP 
+    port: 5672
+    targetPort: 5672
