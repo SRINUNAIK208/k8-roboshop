@@ -4,9 +4,9 @@ metadata:
   name: cart
   namespace: roboshop
 data:
-  REDIS_HOST: redis
-  CATALOGUE_HOST: catalogue
-  CATALOGUE_PORT: 8080
+  REDIS_HOST: "redis"
+  CATALOGUE_HOST: "catalogue"
+  CATALOGUE_PORT: "8080"
 
 ---
 apiVersion: apps/v1
@@ -21,32 +21,33 @@ metadata:
     tier: backend 
 spec:
   replicas: 1
-  selectors:
+  selector:
     matchLabels:
       project: roboshop
       env: dev 
       component: cart
       tier: backend
-  templates:
+  template:
     metadata:
-      project: roboshop
-      env: dev 
-      component: cart
-      tier: backend
+      labels:
+        project: roboshop
+        env: dev 
+        component: cart
+        tier: backend
     spec:
-    - containers:
-         name: cart
+     containers:
+      -  name: cart
          image: srinunaik208/cart:v5 
          envFrom:
-         - configMap:
+         - configMapRef:
              name: cart
          resources:
            requests:
-             memory: 
-             cpu: 
+             memory: "300Mi"
+             cpu: "300m"
            limits:
-             memory:
-             cpu:
+             memory: "500Mi"
+             cpu: "500m"
 ---
 apiVersion: v1 
 kind: Service 
@@ -59,7 +60,7 @@ metadata:
      component: cart
      tier: backend
 spec:
-  selectors:
+  selector:
     project: roboshop
     env: dev 
     component: cart
@@ -75,12 +76,13 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: cart
   namespace: roboshop
+spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: catalogue
-  minReplicas: 2
-  maxReplicas: 10
+    name: cart
+  minReplicas: 1
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
