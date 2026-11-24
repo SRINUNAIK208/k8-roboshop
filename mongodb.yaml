@@ -46,8 +46,8 @@ spec:
       component: mongodb
       tier: database
     spec:
-    - containers:
-         name: mongodb
+     containers:
+       - name: mongodb
          image: srinunaik208/mongodb:v5 
         
 ---
