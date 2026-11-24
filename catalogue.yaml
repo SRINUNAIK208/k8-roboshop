@@ -20,7 +20,7 @@ metadata:
     tier: backend 
 spec:
   replicas: 1
-  selectors:
+  selector:
     matchLabels:
       project: roboshop
       env: dev 
@@ -28,24 +28,25 @@ spec:
       tier: backend
   templates:
     metadata:
-      project: roboshop
-      env: dev 
-      component: catalogue
-      tier: backend
+      labels:
+        project: roboshop
+        env: dev 
+        component: catalogue
+        tier: backend
     spec:
-    - containers:
-         name: catalogue
+      containers:
+      -  name: catalogue
          image: srinunaik208/catalogue:v5 
          envFrom:
          - configMap:
              name: catalogue
          resources:
-           requests:
-             memory: 
-             cpu: 
+           requests: 
+             memory: "500Mi"
+             cpu: "500m"
            limits:
-             memory:
-             cpu:
+             memory: "300Mi"
+             cpu: "300m"
 ---
 apiVersion: v1 
 kind: Service 
@@ -58,7 +59,7 @@ metadata:
      component: catalogue
      tier: backend
 spec:
-  selectors:
+  selector:
     project: roboshop
     env: dev 
     component: catalogue
