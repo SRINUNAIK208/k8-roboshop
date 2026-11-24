@@ -35,7 +35,7 @@ spec:
         tier: backend
     spec:
       containers:
-      -  name: catalogue
+       - name: catalogue
          image: srinunaik208/catalogue:v5 
          envFrom:
          - configMapRef:
