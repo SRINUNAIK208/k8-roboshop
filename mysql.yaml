@@ -1,0 +1,81 @@
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql 
+  namespace: roboshop 
+  labels:
+    project: roboshop
+    env: dev 
+    component: mysql
+    tier: database 
+spec:
+  replicas: 1
+  selectors:
+    matchLabels:
+      project: roboshop
+      env: dev 
+      component: mysql
+      tier: database
+  templates:
+    metadata:
+      project: roboshop
+      env: dev 
+      component: mysql
+      tier: database
+    spec:
+    - containers:
+         name: mysql
+         image: srinunaik208/mysql:v5 
+         resources:
+          requests:
+            memory: 
+            cpu: 
+          limits:
+            memory:
+            cpu:
+        
+---
+apiVersion: v1 
+kind: Service 
+metadata:
+   name: mysql
+   namespace: roboshop
+   labels:
+     project: roboshop
+     env: dev 
+     component: mysql
+     tier: database
+spec:
+  selectors:
+    project: roboshop
+    env: dev 
+    component: mysql
+    tier: database
+  ports:
+  - protocol: TCP 
+    port: 3306
+    targetPort: 3306
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mysql
+  namespace: roboshop
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: StatefulSet
+    name: mysql
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+    
+
+      
