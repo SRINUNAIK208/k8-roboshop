@@ -4,7 +4,7 @@ metadata:
   name: user
   namespace: roboshop
 data:
-  MONGO: true
+  MONGO: "true"
   REDIS_URL: 'redis://redis:6379'
   MONGO_URL: "mongodb://mongodb:27017/users"
 
@@ -21,32 +21,33 @@ metadata:
     tier: backend 
 spec:
   replicas: 1
-  selectors:
+  selector:
     matchLabels:
       project: roboshop
       env: dev 
       component: user
       tier: backend
-  templates:
+  template:
     metadata:
-      project: roboshop
-      env: dev 
-      component: user
-      tier: backend
+      labels:
+        project: roboshop
+        env: dev 
+        component: user
+        tier: backend
     spec:
-    - containers:
-         name: user
+     containers:
+      -  name: user
          image: srinunaik208/user:v5 
          envFrom:
-         - configMap:
+         - configMapRef:
              name: user
          resources:
-           requests:
-             memory: 
-             cpu: 
+           requests: 
+             memory: "300Mi"
+             cpu: "300m"
            limits:
-             memory:
-             cpu:
+             memory: "500Mi"
+             cpu: "500m"
 ---
 apiVersion: v1 
 kind: Service 
@@ -59,7 +60,7 @@ metadata:
      component: user
      tier: backend
 spec:
-  selectors:
+  selector:
     project: roboshop
     env: dev 
     component: user
@@ -75,12 +76,14 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: user
   namespace: roboshop
+
+spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: catalogue
-  minReplicas: 2
-  maxReplicas: 10
+  minReplicas: 1
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
