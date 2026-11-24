@@ -1,3 +1,25 @@
+apiVersion: v1 
+kind: Service 
+metadata:
+   name: mongodb-headless
+   namespace: roboshop
+   labels:
+     project: roboshop
+     env: dev 
+     component: mongodb
+     tier: database
+spec:
+  cluserIP: None
+  selectors:
+    project: roboshop
+    env: dev 
+    component: mongodb
+    tier: database
+  ports:
+  - protocol: TCP 
+    port: 27017
+    targetPort: 27017
+---
 
 apiVersion: apps/v1
 kind: StatefulSet
@@ -27,13 +49,6 @@ spec:
     - containers:
          name: mongodb
          image: srinunaik208/mongodb:v5 
-         resources:
-          requests:
-            memory: 
-            cpu: 
-          limits:
-            memory:
-            cpu:
         
 ---
 apiVersion: v1 
@@ -57,25 +72,5 @@ spec:
     port: 27017
     targetPort: 27017
 
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: mongodb
-  namespace: roboshop
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: StatefulSet
-    name: mongodb
-  minReplicas: 2
-  maxReplicas: 10
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50
-    
 
       
