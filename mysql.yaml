@@ -34,13 +34,14 @@ spec:
       tier: database
   template:
     metadata:
-      project: roboshop
-      env: dev 
-      component: mysql
-      tier: database
+     labels:
+        project: roboshop
+        env: dev 
+        component: mysql
+        tier: database
     spec:
-    - containers:
-         name: mysql
+     containers:
+      -  name: mysql
          image: srinunaik208/mysql:v5 
          envFrom:
          - secretRef:
