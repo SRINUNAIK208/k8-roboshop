@@ -32,7 +32,7 @@ spec:
       env: dev 
       component: mysql
       tier: database
-  templates:
+  template:
     metadata:
       project: roboshop
       env: dev 
