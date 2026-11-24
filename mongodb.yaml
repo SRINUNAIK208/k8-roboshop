@@ -10,7 +10,7 @@ metadata:
      tier: database
 spec:
   clusterIP: None
-  selectors:
+  selector:
     project: roboshop
     env: dev 
     component: mongodb
@@ -33,13 +33,13 @@ metadata:
     tier: database 
 spec:
   replicas: 1
-  selectors:
+  selector:
     matchLabels:
       project: roboshop
       env: dev 
       component: mongodb
       tier: database
-  templates:
+  template:
     metadata:
       project: roboshop
       env: dev 
@@ -62,7 +62,7 @@ metadata:
      component: mongodb
      tier: database
 spec:
-  selectors:
+  selector:
     project: roboshop
     env: dev 
     component: mongodb
