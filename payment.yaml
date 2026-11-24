@@ -4,21 +4,21 @@ metadata:
   name: payment
   namespace: roboshop
 data:
-  CART_HOST: cart 
-  CART_PORT: 8080
-  USER_HOST: user
-  USER_PORT: 8080
-  AMQP_HOST: rabbitmq
+  CART_HOST: "cart"
+  CART_PORT: "8080"
+  USER_HOST: "user"
+  USER_PORT: "8080"
+  AMQP_HOST: "rabbitmq"
 ---
 apiVersion: v1 
 kind: Secret 
 metadata:
   name: payment 
   namespace: roboshop
-type: quae
+type: Opaque
 data:
-  AMQP_USER: roboshop
-  AMQP_PASS: roboshop123
+  AMQP_USER: "cm9ib3Nob3A="
+  AMQP_PASS: "cm9ib3Nob3AxMjM="
 
 ---
 apiVersion: apps/v1
@@ -33,34 +33,35 @@ metadata:
     tier: backend 
 spec:
   replicas: 1
-  selectors:
+  selector:
     matchLabels:
       project: roboshop
       env: dev 
       component: payment
       tier: backend
-  templates:
+  template:
     metadata:
+     labels:
       project: roboshop
       env: dev 
       component: payment
       tier: backend
     spec:
-    - containers:
-         name: payment
+     containers:
+       - name: payment
          image: srinunaik208/payment:v5 
          envFrom:
-         - configmapRef:
+         - configMapRef:
              name: payment
          - secretRef:
              name: payment
          resources:
            requests:
-             memory: 
-             cpu: 
+             memory: "300Mi"
+             cpu: "300m"
            limits:
-             memory:
-             cpu:
+             memory: "500Mi"
+             cpu: "500m"
 ---
 apiVersion: v1 
 kind: Service 
@@ -73,7 +74,7 @@ metadata:
      component: payment
      tier: backend
 spec:
-  selectors:
+  selector:
     project: roboshop
     env: dev 
     component: payment
@@ -89,12 +90,13 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: payment
   namespace: roboshop
+spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: payment
-  minReplicas: 2
-  maxReplicas: 10
+  minReplicas: 1
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
