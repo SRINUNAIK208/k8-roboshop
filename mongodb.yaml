@@ -41,10 +41,11 @@ spec:
       tier: database
   template:
     metadata:
-      project: roboshop
-      env: dev 
-      component: mongodb
-      tier: database
+      labels:
+        project: roboshop
+        env: dev 
+        component: mongodb
+        tier: database
     spec:
      containers:
        - name: mongodb
