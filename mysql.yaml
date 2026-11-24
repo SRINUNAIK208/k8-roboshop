@@ -1,3 +1,18 @@
+apiVersion: v1 
+kind: Secret
+metadata:
+  name: mysql
+  namespace: roboshop
+  labels:
+    project: roboshop
+    env: dev 
+    component: mysql
+    tier: database
+type: Opaque
+data:
+ MYSQL_ROOT_PASSWORD: "Um9ib1Nob3BAMQ=="
+    
+
 
 apiVersion: apps/v1
 kind: StatefulSet
@@ -27,13 +42,10 @@ spec:
     - containers:
          name: mysql
          image: srinunaik208/mysql:v5 
-         resources:
-          requests:
-            memory: 
-            cpu: 
-          limits:
-            memory:
-            cpu:
+         envFrom:
+         - secretRef:
+            name: mysql
+         
         
 ---
 apiVersion: v1 
@@ -47,7 +59,7 @@ metadata:
      component: mysql
      tier: database
 spec:
-  selectors:
+  selector:
     project: roboshop
     env: dev 
     component: mysql
@@ -56,26 +68,26 @@ spec:
   - protocol: TCP 
     port: 3306
     targetPort: 3306
-
 ---
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: mysql
-  namespace: roboshop
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: StatefulSet
-    name: mysql
-  minReplicas: 2
-  maxReplicas: 10
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50
-    
 
-      
+apiVersion: v1 
+kind: Service 
+metadata:
+   name: mysql-headless
+   namespace: roboshop
+   labels:
+     project: roboshop
+     env: dev 
+     component: mysql
+     tier: database
+spec:
+  clusterIP: None
+  selector:
+    project: roboshop
+    env: dev 
+    component: mysql
+    tier: database
+  ports:
+  - protocol: TCP 
+    port: 3306
+    targetPort: 3306
